@@ -16,6 +16,10 @@ var colors = [
     '#ffc107', '#ff85af', '#FF9800', '#39bbb0'
 ];
 
+function onError() {
+
+}
+
 function connect(event) {
     username = document.querySelector("#name").value.trim();
 
@@ -33,16 +37,15 @@ function connect(event) {
 
 usernameForm.addEventListener('submit', connect, true);
 
-function onConnected() {
-    // Subscribe to the Public Topic
-    stompClient.subscribe('/topic/public', onMessageReceived);
+function onMessageReceived() {
 
-    // Tell your username to the server
+}
+
+function onConnected() {
+    stompClient.subscribe('/topic/public', onMessageReceived);
     stompClient.send("/app/chat.addUser",
-        {},
         JSON.stringify({sender: username, type: 'JOIN'})
     )
-
     connectingElement.classList.add('hidden');
 }
 
